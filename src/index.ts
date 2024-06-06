@@ -1,35 +1,10 @@
 import express from 'express';
-import { supabase } from './database/supabase';
-import { GameType } from './@types/@game';
+import { GamesRoutes } from './routes/GamesRoutes';
 
 const app = express()
 app.use(express.json()) //para habilitar o envio de informações em json
+app.use('/games', GamesRoutes)
 
-app.get('/games', async (req, res) => {
-    try {
-        const { data: games } = await supabase.from('games').select("*")
-        res.status(200).json({ games: games })
-    } catch(error){
-        console.error(error)
-        throw error
-    }
-})
-
-app.post('/create_game', async (req, res) => {
-    try {
-        const { name, release } = req.body as GameType
-
-        const { data: createdGame } = await supabase.from('games').insert([{
-            name,
-            release
-        }]).select()
-
-        res.status(201).json({ game: createdGame? createdGame[0] : null  })
-    } catch(error){
-        console.error(error)
-        throw error
-    }
-}) 
 
 
 
