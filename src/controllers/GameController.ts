@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { supabase } from '../database/supabase';
 import { GameType } from '../@types/@game';
 
+import { ScrapperRepository } from "../repository/ScrapperRepository";
+
 export class GameController {
     
     static async index(req: Request, res: Response){
@@ -17,6 +19,14 @@ export class GameController {
 
     static async show(req: Request, res: Response){
         //recupera apenas um resultado
+        try {
+            const data = await ScrapperRepository.findAll()
+            res.status(200).json(data)
+        }catch(error){
+            console.error(error)
+            throw error
+        }
+    
     }
 
     static async store(req: Request, res: Response){
