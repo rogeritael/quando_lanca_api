@@ -1,5 +1,5 @@
 import cheerio = require('cheerio');
-import { getPageInfo } from '../utils/GetPageInfo';
+import { getPageInfo } from '../utils/getPageInfo';
 
 export class ScrapperRepository {
     static async findAll(){
