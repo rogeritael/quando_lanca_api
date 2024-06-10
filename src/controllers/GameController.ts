@@ -31,15 +31,31 @@ export class GameController {
 
     static async store(req: Request, res: Response){
         //armazena um dado
+        // try {
+        //     const { name, release } = req.body as GameType
+    
+        //     const { data: createdGame } = await supabase.from('games').insert([{
+        //         name,
+        //         release
+        //     }]).select()
+    
+        //     res.status(201).json({ game: createdGame? createdGame[0] : null  })
+        // } catch(error){
+        //     console.error(error)
+        //     throw error
+        // }
+
         try {
-            const { name, release } = req.body as GameType
+            const { range } = req.body as { range: string }
     
-            const { data: createdGame } = await supabase.from('games').insert([{
-                name,
-                release
-            }]).select()
+            const games = await ScrapperRepository.addGamesToDBByBatch(range)
+
+            // const { data: createdGame } = await supabase.from('games').insert([{
+            //     name,
+            //     release
+            // }]).select()
     
-            res.status(201).json({ game: createdGame? createdGame[0] : null  })
+            res.status(201).json({ game: games ? games : null  })
         } catch(error){
             console.error(error)
             throw error
