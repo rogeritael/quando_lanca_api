@@ -14,6 +14,18 @@ export class GameController {
             res.status(400).json('Erro ao recuperar jogos')
         }
     }
+
+    static async show(req: Request, res: Response){
+        try {
+            const { id } = req.params
+
+            const game = await GameRepository.findById(id)
+            
+            res.status(200).json(game)
+        }catch(error){
+            res.status(400).json('Não foi possível recuperar o jogo')
+        }
+    }
     // static async insertGames(req: Request, res: Response){
     //     //recupera todos os resultados
     //     try {

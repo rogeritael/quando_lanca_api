@@ -6,7 +6,16 @@ export class GameRepository {
         return games
     }
 
-    findById(id: string){
+    static async findById(id: string){
+        const { data: game } = await supabase.from('games').select("*").eq('id', id)
+        if(game == null){
+            throw new Error
+        }
+        
+        return game
+    }
+
+    static async findBySearchTerm(term: string){
         
     }
 }
