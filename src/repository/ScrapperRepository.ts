@@ -51,7 +51,6 @@ export class ScrapperRepository {
             const developer = $('.subtitle a.underlined').text()
             const image = $('.object-thumbnail figure img').attr('src')
             const background = $('.object-thumbnail figure img').attr('src')
-            const platforms = $('.platforms a.platform-icon').text()
 
             // salvando lista de plataformas ⚠️⚠️⚠️
             let updatedPlatforms: string[] = []
