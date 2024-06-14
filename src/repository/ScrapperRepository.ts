@@ -48,10 +48,12 @@ export class ScrapperRepository {
             
             const name = $('.display-title').text()
             const release = $('.subtitle time').text()
-            const developer = $('a.Developers').text()
+            const developer = $('.subtitle a.underlined').text()
             const image = $('.object-thumbnail figure img').attr('src')
             const background = $('.object-thumbnail figure img').attr('src')
             const platforms = ['xbox', 'playstation']
+
+            //
 
             //formatar a data para um formato aceitável
             const regexToCheckTBAString = /TBA/; //algumas datas vem com a string TBA, precisamos remover
@@ -61,6 +63,7 @@ export class ScrapperRepository {
                 name: name, developer: developer, image: image, release: formattedRelease, platforms: platforms, background: background
             }
 
+            console.log(release)
             console.log(developer)
             //salva o jogo no banco de dados
             // await supabase.from('games_to_add').update({ status: 'added' }).eq('id', currentGame.id);
