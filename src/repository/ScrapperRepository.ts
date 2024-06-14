@@ -11,18 +11,18 @@ export class ScrapperRepository {
     
         // buscando informações na página
         const $ = cheerio.load(data)
-        let gameList: GameList[] = []
+        // let gameList: GameList[] = []
         
         $('.figure-tile').map(async (index, element) => {
             let game_url = $(element).find('.tile-link').attr('href')
             let game_name = $(element).find('.details figcaption').text()
             
             //salva no banco as listas de jogos
-            gameList = [...gameList, { name: game_name, url: 'https://www.ign.com'+game_url }]
+            // gameList = [...gameList, { name: game_name, url: 'https://www.ign.com'+game_url }]
             await supabase.from('games_to_add').insert({ name: game_name, url: 'https://www.ign.com'+game_url, status: 'not added' });
         })
 
-        return gameList
+        return { message: 'Sucesso ao recuperar jogos em lançamento' }
     }
 
     static async insertByRange(range: string){
@@ -68,7 +68,6 @@ export class ScrapperRepository {
                 name: name, developer: developer, image: image, release: formattedRelease, platforms: updatedPlatforms, background: background
             }
 
-            console.log(newGame)
             //salva o jogo no banco de dados
             await supabase.from('games_to_add').update({ status: 'added' }).eq('id', currentGame.id);
             await supabase.from('games').insert([newGame]);
