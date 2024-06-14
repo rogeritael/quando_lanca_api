@@ -6,7 +6,7 @@ import { ScrapperRepository } from "../repository/ScrapperRepository";
 
 export class GameController {
     
-    static async index(req: Request, res: Response){
+    static async insertGames(req: Request, res: Response){
         //recupera todos os resultados
         try {
             const { data: games } = await supabase.from('games').select("*")
@@ -20,7 +20,7 @@ export class GameController {
     static async show(req: Request, res: Response){
         //recupera apenas um resultado
         try {
-            const data = await ScrapperRepository.findAll()
+            const data = await ScrapperRepository.findAnnouncedGames()
             res.status(200).json(data)
         }catch(error){
             console.error(error)
@@ -29,26 +29,12 @@ export class GameController {
     
     }
 
-    static async store(req: Request, res: Response){
-        //armazena um dado
-        // try {
-        //     const { name, release } = req.body as GameType
-    
-        //     const { data: createdGame } = await supabase.from('games').insert([{
-        //         name,
-        //         release
-        //     }]).select()
-    
-        //     res.status(201).json({ game: createdGame? createdGame[0] : null  })
-        // } catch(error){
-        //     console.error(error)
-        //     throw error
-        // }
+    static async saveAnnouncedGames(req: Request, res: Response){
 
         try {
             const { range } = req.body as { range: string }
     
-            const games = await ScrapperRepository.addGamesToDBByBatch(range)
+            const games = await ScrapperRepository.insertByRange(range)
 
             // const { data: createdGame } = await supabase.from('games').insert([{
             //     name,

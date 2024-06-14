@@ -1,5 +1,5 @@
 import express from 'express';
-import { GamesRoutes } from './routes/GamesRoutes';
+import { ScrapperRoutes } from './routes/ScrapperRoutes';
 
 const app = express()
 
@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     next()
 })
     
-app.use('/games', GamesRoutes)
+app.use('/games', ScrapperRoutes)
 
 
 app.listen(process.env.PORT? Number(process.env.PORT) : 5000, () => {

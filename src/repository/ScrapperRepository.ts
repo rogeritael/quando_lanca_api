@@ -4,7 +4,7 @@ import { supabase } from '../database/supabase';
 import { GameList } from '../@types/@gameList';
 
 export class ScrapperRepository {
-    static async findAll(){ // adiciona jogos ao games_to_add
+    static async findAnnouncedGames(){ // adiciona jogos ao games_to_add
     // BUSCA A URL DE TODOS OS JOGOS EM LANÇAMENTO
         // recupera o HTML da página
         const data = await getPageInfo('https://www.ign.com/upcoming/games')
@@ -25,7 +25,7 @@ export class ScrapperRepository {
         return gameList
     }
 
-    static async addGamesToDBByBatch(range: string){
+    static async insertByRange(range: string){
         let initial = range.split(':')[0]
         let last = range.split(':')[1]
 
