@@ -51,20 +51,25 @@ export class ScrapperRepository {
             const developer = $('.subtitle a.underlined').text()
             const image = $('.object-thumbnail figure img').attr('src')
             const background = $('.object-thumbnail figure img').attr('src')
-            const platforms = ['xbox', 'playstation']
+            const platforms = $('.platforms a.platform-icon').text()
 
-            //
+            // salvando lista de plataformas ⚠️⚠️⚠️
+            let updatedPlatforms: string[] = []
+            $('.platforms a.platform-icon').each((index, element) => {
+                updatedPlatforms.push($(element).text());
+            });
+            
+            updatedPlatforms = [...new Set(updatedPlatforms)] //desduplicando dados ⚠️⚠️⚠️
 
             //formatar a data para um formato aceitável
             const regexToCheckTBAString = /TBA/; //algumas datas vem com a string TBA, precisamos remover
             const formattedRelease = regexToCheckTBAString.test(release) ? 'To Be Announced' : new Date(release);
             
             let newGame = {
-                name: name, developer: developer, image: image, release: formattedRelease, platforms: platforms, background: background
+                name: name, developer: developer, image: image, release: formattedRelease, platforms: updatedPlatforms, background: background
             }
 
-            console.log(release)
-            console.log(developer)
+            console.log(newGame)
             //salva o jogo no banco de dados
             // await supabase.from('games_to_add').update({ status: 'added' }).eq('id', currentGame.id);
             // await supabase.from('games').insert([newGame]);
