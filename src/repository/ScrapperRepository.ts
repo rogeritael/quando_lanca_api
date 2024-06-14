@@ -71,8 +71,8 @@ export class ScrapperRepository {
 
             console.log(newGame)
             //salva o jogo no banco de dados
-            // await supabase.from('games_to_add').update({ status: 'added' }).eq('id', currentGame.id);
-            // await supabase.from('games').insert([newGame]);
+            await supabase.from('games_to_add').update({ status: 'added' }).eq('id', currentGame.id);
+            await supabase.from('games').insert([newGame]);
         }
 
         return added

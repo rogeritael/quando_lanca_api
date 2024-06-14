@@ -3,9 +3,17 @@ import { supabase } from '../database/supabase';
 import { GameType } from '../@types/@game';
 
 import { ScrapperRepository } from "../repository/ScrapperRepository";
+import { GameRepository } from "../repository/GameRepository";
 
 export class GameController {
-    
+    static async index(req: Request, res: Response){
+        try {
+            const games = await GameRepository.findAll()
+            res.status(200).json(games)
+        }catch(error){
+            res.status(400).json('Erro ao recuperar jogos')
+        }
+    }
     // static async insertGames(req: Request, res: Response){
     //     //recupera todos os resultados
     //     try {

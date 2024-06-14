@@ -1,9 +1,8 @@
-// import express from "express";
-// import { GameController } from "../controllers/GameController";
+import express from "express";
+import { GameController } from "../controllers/GameController";
 
-// const routes = express.Router()
+const routes = express.Router()
 
-// routes.post('/save_announced_games', GameController.saveAnnouncedGames)
-// routes.post('/insert_games', GameController.insertGames)
+routes.get('/', GameController.index)
 
-// export { routes as GamesRoutes }
+export { routes as GamesRoutes }
