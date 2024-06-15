@@ -7,9 +7,9 @@ export class ScrapperController {
         try {
             const { range } = req.body as { range: string }
     
-            const addedGames = await ScrapperRepository.insertByRange(range)
+            const { added, inserted, notInserted } = await ScrapperRepository.insertByRange(range)
     
-            res.status(201).json({ addedGames: addedGames ? addedGames : null  })
+            res.status(201).json({ inserted: inserted.length, notInserted: notInserted.length, addedToDB: added ? added : [] })
         } catch(error){
             res.status(400).json({message: 'erro ao inserir jogos' })
         }

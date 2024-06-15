@@ -3,6 +3,9 @@ import { supabase } from '../database/supabase';
 export class GameRepository {
     static async findAll(){
         const { data: games } = await supabase.from('games').select("*")
+        // paginação
+        // const { data: games } = await supabase.from('games').select("*").range(2, 7);
+        
         return games
     }
 

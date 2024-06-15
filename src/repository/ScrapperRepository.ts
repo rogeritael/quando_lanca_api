@@ -33,6 +33,7 @@ export class ScrapperRepository {
         const { data: urls } : any = await supabase.from('games_to_add').select("name, url, status, id").eq('status', 'not added');
         let added: any = []
 
+
         for(let index = Number(initial); index < Number(last); index++){
             added = [...added, urls[index]]
         }
@@ -73,7 +74,10 @@ export class ScrapperRepository {
             await supabase.from('games').insert([newGame]);
         }
 
-        return added
+        const { data: notInserted } : any = await supabase.from('games_to_add').select("name, url, status, id").eq('status', 'not added');
+        const { data: inserted } : any = await supabase.from('games_to_add').select("name, url, status, id").eq('status', 'added');
+        // console.log(`inseridos: ${inserted.length} - não inseridos: ${notInserted.length}`)
+        return { added, inserted, notInserted }
     }
 
     static async findByUrl(target: string){
