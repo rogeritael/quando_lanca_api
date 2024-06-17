@@ -3,7 +3,14 @@ import { GameRepository } from "../repository/GameRepository";
 
 export class GameController {
     static async index(req: Request, res: Response){
+        // filtros - jogos que chegam em até 30 dias; jogos lançados em até 30 dias; jogos por categoria;
+        const { minified, initial, range } = req.body
         try {
+            if(initial && range){
+                
+            }
+
+            // const games = await GameRepository.findAll(minified=true,)
             const games = await GameRepository.findAll()
             res.status(200).json(games)
         }catch(error){
@@ -13,9 +20,9 @@ export class GameController {
 
     static async show(req: Request, res: Response){
         try {
-            const { id } = req.params
+            const { term } = req.params //nome ou id
 
-            const game = await GameRepository.findById(id)
+            const game = await GameRepository.search(term)
             
             res.status(200).json(game)
         }catch(error){

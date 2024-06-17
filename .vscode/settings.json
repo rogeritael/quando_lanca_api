@@ -9,7 +9,7 @@
         // "README.md": true,
         ".eslintrc.json": true,
         "next.config.js": true,
-        "tsconfig.json": true,
+        // "tsconfig.json": true,
         "next-env.d.ts": true,
         "public": true,
         // "dist": true,
