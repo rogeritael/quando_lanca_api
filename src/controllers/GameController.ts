@@ -4,14 +4,15 @@ import { GameRepository } from "../repository/GameRepository";
 export class GameController {
     static async index(req: Request, res: Response){
         // filtros - jogos que chegam em até 30 dias; jogos lançados em até 30 dias; jogos por categoria;
-        const { minified, initial, range } = req.body
         try {
-            if(initial && range){
-                
-            }
+            const { page, minified } = req.body
+
+            // if(page){
+            //     const games = await GameRepository.findAll({ page, minified })
+            // }
 
             // const games = await GameRepository.findAll(minified=true,)
-            const games = await GameRepository.findAll()
+            const games = await GameRepository.findAll({ page, minified })
             res.status(200).json(games)
         }catch(error){
             res.status(400).json('Erro ao recuperar jogos')
