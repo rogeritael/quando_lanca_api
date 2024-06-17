@@ -1,4 +1,5 @@
 import { supabase } from '../database/supabase';
+import { timer } from '../utils/timer';
 
 type findAllTypes = {
     page?: number
@@ -7,17 +8,28 @@ type findAllTypes = {
 
 export class GameRepository {
     static async findAll({ page, minified }: findAllTypes){ //10 -> 50
-        if(page && page != 0){
+        function addTimer(games: any[]){
+            const gamesWithTimer: any[] = games.map(game => ({
+                ...game, lançamento: game.release == 'To Be Announced' ? game.release : timer(game.release)
+            }))
+
+            return gamesWithTimer
+        }
+
+        if(page){
             const pageSize = 10; // Número de jogos por página
             const start = (page - 1) * pageSize; // Índice inicial
             const end = start + pageSize - 1; // Índice final
             const { data: games } = minified ? await supabase.from('games').select("name, release").range(start, end) : await supabase.from('games').select("*").range(start, end)
-            games && console.log(games.length)
-            return games
+            if(games){
+                return addTimer(games)
+            } 
         }
 
         const { data: games } = minified ? await supabase.from('games').select("name, release") : await supabase.from('games').select("*")
-        return games
+        if(games){
+            return addTimer(games)
+        }
     }
 
     static async search(term: string){

@@ -11,14 +11,12 @@ export class ScrapperRepository {
     
         // buscando informações na página
         const $ = cheerio.load(data)
-        // let gameList: GameList[] = []
         
         $('.figure-tile').map(async (index, element) => {
             let game_url = $(element).find('.tile-link').attr('href')
             let game_name = $(element).find('.details figcaption').text()
             
             //salva no banco as listas de jogos
-            // gameList = [...gameList, { name: game_name, url: 'https://www.ign.com'+game_url }]
             await supabase.from('games_to_add').insert({ name: game_name, url: 'https://www.ign.com'+game_url, status: 'not added' });
         })
 

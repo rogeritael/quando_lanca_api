@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ScrapperRepository } from "../repository/ScrapperRepository";
+import { searchGameIGDB } from "../utils/searchGameIGDB";
 
 export class ScrapperController {
     
