@@ -1,6 +1,7 @@
 import express from 'express';
 import { ScrapperRoutes } from './routes/ScrapperRoutes';
 import { GamesRoutes } from './routes/GamesRoutes';
+import { UserRoutes } from './routes/UserRoutes';
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use((req, res, next) => {
     
 app.use('/games', ScrapperRoutes)
 app.use('/games', GamesRoutes)
+app.use('/users', UserRoutes)
 
 
 app.listen(process.env.PORT? Number(process.env.PORT) : 5000, () => {
