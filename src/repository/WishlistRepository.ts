@@ -1,8 +1,17 @@
 import { supabase } from '../database/supabase';
-import { userType } from '../@types/@user';
 
 export class WishlistRepository {
-    static async findByEmail(email: string){
+    static async findAll(userId: string){
+        //recupera o ID dos jogos da wishlist do usuário
+        const {data: gamesId}  = await supabase.from('wishlist').select('game_id').eq('user_id', userId)
+        
+        //retorna as informações dos jogos baseado nos ID's recuperados
+        const { data: games, error } = await supabase
+        .from('games')
+        .select('*')
+        .in('id', gamesId!.map(item => item.game_id));
+        
+        return games
     }
 
     static async addToWishlist(user_id: string, game_id: string) {

@@ -6,20 +6,14 @@ import { WishlistRepository } from "../repository/WishlistRepository";
         
         static async index(req: Request, res: Response){
             try {
-                //recupera todos os resultados
+                const { userId } = req.body
+
+                const wishlist = await WishlistRepository.findAll(userId)
+                res.status(200).json(wishlist)
             } catch(error){
                 console.error(error)
                 throw error
             } 
-        }
-
-        static async show(req: Request, res: Response){
-            try {
-                //recupera apenas um resultado (serach)
-            } catch(error){
-                console.error(error)
-                throw error
-            }
         }
 
         static async store(req: Request, res: Response){
