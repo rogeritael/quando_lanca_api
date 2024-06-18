@@ -1,7 +1,4 @@
-import cheerio = require('cheerio');
-import { getPageInfo } from '../utils/getPageInfo';
 import { supabase } from '../database/supabase';
-import { GameList } from '../@types/@gameList';
 import { userType } from '../@types/@user';
 
 export class UserRepository {

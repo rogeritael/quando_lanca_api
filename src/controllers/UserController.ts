@@ -1,6 +1,11 @@
 import { Request, Response } from "express"
 import { UserRepository } from "../repository/UserRepository"
 import { comparePassword, generateHash } from "../utils/password"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+//SECRET
+const SECRET = "jfn30tk5#4f$"
 
 export class UserController {
 
@@ -73,9 +78,9 @@ export class UserController {
             }
 
             //retorna o token
-            const token = 'dfpgj45t49yj'
+            const token = jwt.sign({id: user.id}, SECRET)
 
-            res.status(200).json(token)
+            res.status(200).json({ message: 'login realizado com sucesso', token })
 
         } catch(error){
             console.error(error)
