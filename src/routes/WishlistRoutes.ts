@@ -1,10 +1,10 @@
 import express from "express";
-import { ScrapperController } from "../controllers/ScrapperController";
+import { WishlistController } from "../controllers/WishlistController";
 
 const routes = express.Router()
 
-routes.get('/:userId', ScrapperController.findAnnouncedGames)
-routes.post('/add_to_wishlist', ScrapperController.insertGames)
-routes.post('/remove_from_wishlist', ScrapperController.insertGames)
+// routes.get('/:userId', WishlistRepository.addToWishlist)
+routes.post('/add', WishlistController.store)
+// routes.post('/remove', WishlistRepository.insertGames)
 
-export { routes as UserRoutes }
+export { routes as WishlistRoutes }

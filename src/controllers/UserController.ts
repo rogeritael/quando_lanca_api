@@ -1,17 +1,8 @@
 import { Request, Response } from "express"
 import { UserRepository } from "../repository/UserRepository"
-import { generateHash } from "../utils/password"
+import { comparePassword, generateHash } from "../utils/password"
 
 export class UserController {
-        
-    // static async index(req: Request, res: Response){
-    //     try {
-    //         //recupera todos os resultados
-    //     } catch(error){
-    //         console.error(error)
-    //         throw error
-    //     } 
-    // }
 
     static async show(req: Request, res: Response){
         try {
@@ -63,6 +54,18 @@ export class UserController {
 
     static async login(req: Request, res: Response){
         try {
+            const { username, email, password } = req.body
+            
+            if(!password && !username && !email){
+                return res.status(400).json({ message: 'insira as informações corretamente' })
+            }
+
+            res.status(200).json({ message: 'funcionou' })
+
+            //verifica se o usuário existe
+            
+            // const userByUsername = await UserRepository.findByUsername(username)
+
             //faz login e retorna um token
         } catch(error){
             console.error(error)
