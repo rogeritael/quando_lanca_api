@@ -7,10 +7,6 @@ export class GameController {
         try {
             const { page, minified } = req.body
 
-            // if(page){
-            //     const games = await GameRepository.findAll({ page, minified })
-            // }
-
             // const games = await GameRepository.findAll(minified=true,)
             const games = await GameRepository.findAll({ page, minified })
             res.status(200).json(games)

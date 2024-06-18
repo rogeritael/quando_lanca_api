@@ -6,7 +6,7 @@ const routes = express.Router()
 
 // routes.get('/:userId', WishlistController.addToWishlist)
 routes.get('/', verifyToken, WishlistController.index)
-routes.post('/add', WishlistController.store)
-routes.delete('/remove', WishlistController.delete)
+routes.post('/add', verifyToken, WishlistController.store)
+routes.delete('/remove', verifyToken, WishlistController.delete)
 
 export { routes as WishlistRoutes }
