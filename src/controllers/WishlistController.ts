@@ -36,4 +36,17 @@ import { WishlistRepository } from "../repository/WishlistRepository";
                 throw error
             }
         }
+
+        static async delete(req: Request, res: Response){
+            try{
+                const { userId, gameId } = req.body
+
+                await WishlistRepository.removeFromWishlist(userId, gameId)
+                res.status(200).json({ message: 'Jogo removido da wishlist' })
+
+            }catch(error){
+                res.status(400).json({ message: 'Erro ao remover jogo da wishlist' })
+            }
+
+        }
     }

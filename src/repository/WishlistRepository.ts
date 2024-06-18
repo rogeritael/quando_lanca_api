@@ -43,8 +43,6 @@ export class WishlistRepository {
             return { success: false, message: 'Usuário não encontrado' };
           }
       
-          console.log('Usuário encontrado:', user);
-      
           // Inserir na tabela wishlist
           const { data: wishlist, error: wishlistError } = await supabase
             .from('wishlist')
@@ -63,7 +61,12 @@ export class WishlistRepository {
         }
       }
 
-    // static async removeFromWishlist(user: userType){
-    // }
+    static async removeFromWishlist(user_id: string, game_id: string){
+        const { data: wishlist, error: wishlistError } = await supabase
+            .from('wishlist')
+            .delete()
+            .eq('user_id', user_id)
+            .eq('game_id', game_id);
+    }
 
 }

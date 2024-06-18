@@ -3,8 +3,8 @@ import { WishlistController } from "../controllers/WishlistController";
 
 const routes = express.Router()
 
-// routes.get('/:userId', WishlistRepository.addToWishlist)
+// routes.get('/:userId', WishlistController.addToWishlist)
 routes.post('/add', WishlistController.store)
-// routes.post('/remove', WishlistRepository.insertGames)
+routes.delete('/remove', WishlistController.delete)
 
 export { routes as WishlistRoutes }
