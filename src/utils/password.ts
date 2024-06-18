@@ -4,8 +4,7 @@ import { hash, compare } from "bcrypt";
 export async function comparePassword(userPassword: string, DBPassword: string){
     try {
         const match = await compare(userPassword, DBPassword);
-        console.log(match)
-        return true;
+        return match //true ou false
     } catch (error) {
         console.error('Erro ao verificar a senha:', error);
         return false;

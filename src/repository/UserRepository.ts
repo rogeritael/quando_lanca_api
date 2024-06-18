@@ -14,8 +14,16 @@ export class UserRepository {
         }
     }
 
+    static async findUser(username: string){
+        const { data: userByUsername } = await supabase.from('users').select("*").eq('username', username).select()
+        if(userByUsername){
+            return userByUsername[0]
+        }
+    }
+
+    //checkIfUserExist
     static async findByUsername(username: string){
-        const { data: userByUsername } = await supabase.from('users').select("*").eq('username', username)
+        const { data: userByUsername } = await supabase.from('users').select("*").eq('username', username).select()
         if(userByUsername!.length){
             return true
         } else {

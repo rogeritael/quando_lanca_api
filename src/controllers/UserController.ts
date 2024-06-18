@@ -54,19 +54,29 @@ export class UserController {
 
     static async login(req: Request, res: Response){
         try {
-            const { username, email, password } = req.body
+            const { username, password } = req.body
             
-            if(!password && !username && !email){
+            if(!password || !username){
                 return res.status(400).json({ message: 'insira as informações corretamente' })
             }
 
-            res.status(200).json({ message: 'funcionou' })
+            //o usuário existe?
+            const user = await UserRepository.findUser(username)
+            if(!user){
+                return res.status(400).json({ message: 'Usuário não existe' })
+            }
 
-            //verifica se o usuário existe
-            
-            // const userByUsername = await UserRepository.findByUsername(username)
+            //as senhas coincidem?
+            const isPasswordRight = await comparePassword(password, user.password)
+            if(isPasswordRight === false){
+                return res.status(400).json({ message: 'insira as informações corretamente' })
+            }
 
-            //faz login e retorna um token
+            //retorna o token
+            const token = 'dfpgj45t49yj'
+
+            res.status(200).json(token)
+
         } catch(error){
             console.error(error)
             throw error

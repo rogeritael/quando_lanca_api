@@ -6,12 +6,17 @@ export class WishlistRepository {
         const {data: gamesId}  = await supabase.from('wishlist').select('game_id').eq('user_id', userId)
         
         //retorna as informações dos jogos baseado nos ID's recuperados
-        const { data: games, error } = await supabase
-        .from('games')
-        .select('*')
-        .in('id', gamesId!.map(item => item.game_id));
-        
-        return games
+        if(gamesId){
+
+            const { data: games, error } = await supabase
+            .from('games')
+            .select('*')
+            .in('id', gamesId!.map(item => item.game_id));
+            
+            return games
+        } else {
+            throw new Error
+        }
     }
 
     static async addToWishlist(user_id: string, game_id: string) {
