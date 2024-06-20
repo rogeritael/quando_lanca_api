@@ -34,11 +34,8 @@ export class WishlistRepository {
           }
       
           if (!game) {
-            console.log('Jogo não encontrado');
             return { success: false, message: 'Jogo não encontrado' };
           }
-      
-          console.log('Jogo encontrado:', game);
       
           // Verificar se o user_id existe na tabela users
           const { data: user, error: userError } = await supabase
@@ -53,7 +50,6 @@ export class WishlistRepository {
           }
       
           if (!user) {
-            console.log('Usuário não encontrado');
             return { success: false, message: 'Usuário não encontrado' };
           }
       
