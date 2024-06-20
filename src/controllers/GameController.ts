@@ -23,7 +23,7 @@ export class GameController {
             
             res.status(200).json(game)
         }catch(error){
-            res.status(400).json('Não foi possível recuperar o jogo')
+            res.status(400).json({message: 'Não foi possível recuperar o jogo'})
         }
     }
 }
