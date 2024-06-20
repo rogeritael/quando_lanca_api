@@ -15,12 +15,6 @@ export class WishlistController {
             if(!userExists){
                 return res.status(400).json({ message: "Esse usuário não existe" })
             }
-            
-            //verifica se o jogo existe
-            // const gameExists = await GameRepository.checkIfGameExists(userId)
-            // if(!gameExists){
-            //     return res.status(400).json({ message: "Esse usuário não existe" })
-            // }
 
             const wishlist = await WishlistRepository.findAll(userId)
             res.status(200).json(wishlist)
@@ -38,6 +32,19 @@ export class WishlistController {
             if(!userId || !gameId){
                 return res.status(400).json({ message: 'Erro ao adicionar jogo aos favoritos' })
             }
+
+            // //verifica se o jogo existe
+            const gameExists = await GameRepository.checkIfGameExists(gameId)
+            if(!gameExists){
+                return res.status(400).json({ message: "Esse jogo não existe" })
+            }
+            
+            //verifica se o usuário existe
+            const userExists = await UserRepository.checkIfUserExists(userId)
+            if(!userExists){
+                return res.status(400).json({ message: "Esse usuário não existe" })
+            }
+
 
             await WishlistRepository.addToWishlist(userId, gameId)
             res.status(201).json({ message: `jogo adicionado à lista de desejos com sucesso` })

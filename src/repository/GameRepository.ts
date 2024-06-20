@@ -71,4 +71,18 @@ export class GameRepository {
 
         return game;
     }
+
+    static async checkIfGameExists(gameId: string){
+        const { data: game, error } = await supabase.from('games').select('*').eq('id', gameId)
+    
+        if(error){
+            return false
+        }
+
+        if(game!.length === 0){
+            return false
+        } else {
+            return true
+        }
+    }
 }

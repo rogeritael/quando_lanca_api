@@ -19,7 +19,12 @@ export class UserRepository {
     }
 
     static async checkIfUserExists(id: string){
-        const { data: userByUsername } = await supabase.from('users').select("*").eq('username', id).select()
+        const { data: userByUsername, error } = await supabase.from('users').select("*").eq('username', id).select()
+        
+        if(error){
+            return false
+        }
+        
         if(userByUsername!.length === 0){
             return false
         } else {
