@@ -1,12 +1,26 @@
 import { Request, Response } from "express";
 import { supabase } from '../database/supabase';
 import { WishlistRepository } from "../repository/WishlistRepository";
+import { UserRepository } from "../repository/UserRepository";
+import { GameRepository } from "../repository/GameRepository";
 
 export class WishlistController {
     
     static async index(req: Request, res: Response){
         try {
             const userId = req.user.id
+
+            //verifica se o usuário existe
+            const userExists = await UserRepository.checkIfUserExists(userId)
+            if(!userExists){
+                return res.status(400).json({ message: "Esse usuário não existe" })
+            }
+            
+            //verifica se o jogo existe
+            // const gameExists = await GameRepository.checkIfGameExists(userId)
+            // if(!gameExists){
+            //     return res.status(400).json({ message: "Esse usuário não existe" })
+            // }
 
             const wishlist = await WishlistRepository.findAll(userId)
             res.status(200).json(wishlist)
@@ -26,7 +40,7 @@ export class WishlistController {
             }
 
             await WishlistRepository.addToWishlist(userId, gameId)
-            res.status(400).json({ message: `jogo adicionado à lista de desejos com sucesso` })
+            res.status(201).json({ message: `jogo adicionado à lista de desejos com sucesso` })
         } catch(error){
             console.error(error)
             throw error
