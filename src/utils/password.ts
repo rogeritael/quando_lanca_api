@@ -1,4 +1,5 @@
-import { hash, compare } from "bcrypt";
+// import { hash, compare } from "bcryptjs";
+const { hash, compare } = require('bcryptjs')
 
 
 export async function comparePassword(userPassword: string, DBPassword: string){
