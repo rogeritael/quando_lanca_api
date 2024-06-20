@@ -83,4 +83,17 @@ export class WishlistRepository {
             .eq('game_id', game_id);
     }
 
+    static async checkIfGameIsInWishlist(userId: string, gameId: string){
+      const { data: wishlist, error } = await supabase.from('wishlist').select('*').eq('user_id', userId).eq('game_id', gameId)
+
+      if(error){
+        return false
+      }
+
+      if(wishlist!.length === 0){
+        return false
+      } else {
+        return true
+      }
+    }
 }

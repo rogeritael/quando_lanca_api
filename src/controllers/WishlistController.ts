@@ -33,18 +33,20 @@ export class WishlistController {
                 return res.status(400).json({ message: 'Erro ao adicionar jogo aos favoritos' })
             }
 
-            // //verifica se o jogo existe
-            const gameExists = await GameRepository.checkIfGameExists(gameId)
-            if(!gameExists){
-                return res.status(400).json({ message: "Esse jogo não existe" })
-            }
-            
             //verifica se o usuário existe
             const userExists = await UserRepository.checkIfUserExists(userId)
             if(!userExists){
                 return res.status(400).json({ message: "Esse usuário não existe" })
             }
 
+            // //verifica se o jogo existe
+            const gameExists = await GameRepository.checkIfGameExists(gameId)
+            if(!gameExists){
+                return res.status(400).json({ message: "Esse jogo não existe" })
+            }
+
+            //verifica se o jogo já foi adicionado a wishlist
+            //se foi, nao tem porque adicionar
 
             await WishlistRepository.addToWishlist(userId, gameId)
             res.status(201).json({ message: `jogo adicionado à lista de desejos com sucesso` })
@@ -58,6 +60,24 @@ export class WishlistController {
         try{
             const { gameId } = req.body
             const userId = req.user.id
+
+            //verifica se o usuário existe
+            const userExists = await UserRepository.checkIfUserExists(userId)
+            if(!userExists){
+                return res.status(400).json({ message: "Esse usuário não existe" })
+            }
+
+            // //verifica se o jogo existe
+            const gameExists = await GameRepository.checkIfGameExists(gameId)
+            if(!gameExists){
+                return res.status(400).json({ message: "Esse jogo não existe" })
+            }
+
+            //verifica se o jogo já foi adicionado a wishlist. Se nao foi adicionado, nao tem porque excluir
+            const isInWishlist = await WishlistRepository.checkIfGameIsInWishlist(userId, gameId)
+            if(!isInWishlist){
+                return res.status(400).json({ message: 'O jogo não está na sua wishlist' })
+            }
 
             await WishlistRepository.removeFromWishlist(userId, gameId)
             res.status(200).json({ message: 'Jogo removido da wishlist' })
